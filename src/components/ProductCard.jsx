@@ -1,8 +1,4 @@
-import { useContext } from 'react';
-
-import { ProductContext } from '../context/ProductContext';
-
-function ProductCard({product}) {
+function ProductCard({ product }) {
   if (!product) {
     return <div className='p-4 text-red-500'>Product not found</div>;
   }

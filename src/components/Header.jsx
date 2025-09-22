@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext';
 
 function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
-  const { cart } = useCart();
+  const { cart, removeFromCart, clearCart } = useCart();
   const itemCount = cart.reduce((acc, item) => acc + item.qty, 0);
   const total = cart
     .reduce((acc, item) => acc + item.price * item.qty, 0)
@@ -13,7 +13,7 @@ function Header() {
 
   return (
     <header className='bg-white shadow-md p-4 flex justify-between items-center'>
-      <h1 className='text-2xl font-bold text-blue-600'>Shop Mate</h1>
+      <h1 className='text-2xl font-bold text-blue-600'>ShopMate</h1>
       <div className='relative'>
         <button
           onClick={() => setShowDropdown(!showDropdown)}
@@ -41,16 +41,33 @@ function Header() {
                         className='flex justify-between items-center py-2'
                         key={item.id}
                       >
-                        <div className='font-semibold'>{item.name}</div>
-                        <p className='text-sm text-gray-500'>{item.qty} x ${item.price}</p>
+                        <div>
+                          <p className='font-semibold'>{item.name}</p>
+                          <p className='text-sm text-gray-500'>
+                            {item.qty} x ${item.price}
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className='text-sm text-red-500 hover:underline'
+                        >
+                          Remove
+                        </button>
                       </li>
                     ))}
                   </ul>
 
-                  <div className="mt-4 flex justify-between font-semibold">
-                     <span>Total:</span>
-                     <span>${total}</span>
+                  <div className='mt-4 flex justify-between font-semibold'>
+                    <span>Total:</span>
+                    <span>${total}</span>
                   </div>
+
+                  <button
+                    onClick={clearCart}
+                    className='mt-3 w-full bg-red-500 text-white py-1 rounded transition hover:bg-red-600'
+                  >
+                    Clear Cart
+                  </button>
                 </>
               )}
             </div>
